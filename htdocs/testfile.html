@@ -1,0 +1,42 @@
+
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <p id="demo"></p>
+
+        <div class="dropdown">
+            <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown trigger
+            <span class="caret"></span>
+            </button>
+            <ul id="dropdown" class="dropdown-menu" aria-labelledby="dLabel"></ul>
+        </div>
+
+        <script>
+        var txt, parser, xmlDoc;
+            parser = new DOMParser();
+
+        	txt = "<queryresult success=\"true\" error=\"false\" numpods=\"3\" datatypes=\"Word\" timedout=\"\" timedoutpods=\"\" timing=\"1.183\" parsetiming=\"0.454\" parsetimedout=\"false\" recalculate=\"\" id=\"MSPa10151g5ga614123abf4100005e5ac66iad7caeb0\" host=\"http:\/\/www4c.wolframalpha.com\" server=\"42\" related=\"http:\/\/www4c.wolframalpha.com\/api\/v2\/relatedQueries.jsp?id=MSPa10161g5ga614123abf4100003063f5g6ef075g2i5513940775737612641\" version=\"2.6\" profile=\"EnterDoQuery:0.,StartWrap:1.18282\">\r\n<pod title=\"Input interpretation\" scanner=\"Identity\" id=\"Input\" position=\"100\" error=\"false\" numsubpods=\"1\">\r\n<subpod title=\"\">\r\n<plaintext>granular (English word) | synonyms<\/plaintext>\r\n<\/subpod>\r\n<\/pod>\r\n<pod title=\"Result\" scanner=\"Data\" id=\"Synonyms:WordData\" position=\"200\" error=\"false\" numsubpods=\"1\" primary=\"true\">\r\n<subpod title=\"\">\r\n<plaintext>\r\ncoarse\u2010grained | farinaceous | grainy | granulose | gritty | mealy | chondritic (total: 7)\r\n<\/plaintext>\r\n<\/subpod>\r\n<states count=\"2\">\r\n<state name=\"Show synonym network\" input=\"Synonyms:WordData__Show synonym network\"\/>\r\n<statelist count=\"2\" value=\"Meanings combined\" delimiters=\"\">\r\n<state name=\"Meanings divided\" input=\"Synonyms:WordData__Meanings divided\"\/>\r\n<state name=\"Meanings combined\" input=\"Synonyms:WordData__Meanings combined\"\/>\r\n<\/statelist>\r\n<\/states>\r\n<\/pod>\r\n<pod title=\"Definitions\" scanner=\"Data\" id=\"Definition:WordData\" position=\"300\" error=\"false\" numsubpods=\"1\">\r\n<subpod title=\"\">\r\n<plaintext>\r\n1 | adjective | composed of or covered with particles resembling meal in texture or consistency 2 | adjective | having a granular structure like that of chondrites\r\n<\/plaintext>\r\n<\/subpod>\r\n<\/pod>\r\n<sources count=\"1\">\r\n<source url=\"http:\/\/www.wolframalpha.com\/sources\/WordDataSourceInformationNotes.html\" text=\"Word data\"\/>\r\n<\/sources>\r\n<\/queryresult>";
+        xmlDoc = parser.parseFromString(txt,"text/xml");
+
+        var x = xmlDoc.getElementsByTagName('plaintext')[1];
+        // alert(x);
+        document.getElementById("demo").innerHTML = xmlDoc.getElementsByTagName('plaintext')[1].childNodes[0].nodeValue;
+        //document.getElementById("demo").innerHTML = x.childNodes[0].nodeValue;
+
+        var str = x.childNodes[0].nodeValue;
+
+        str = str.replace("(total: 7)", "");
+        var array = str.split("|");
+        //document.getElementById("demo").innerHTML = res;
+
+        jQuery.each( array, function( i, val ) {
+            $( "#dropdown" ).append( "<li>" + val +"</li>" );
+        });
+        </script>
+    </body>
+</html>
